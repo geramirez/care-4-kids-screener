@@ -1,4 +1,4 @@
- class Screener {
+ export class Screener {
     constructor(ui) {
         this.ui = ui
     }
@@ -11,8 +11,8 @@
     meetsRequirements(applicant) {
         return applicant.meets_family_income_requirements &&
             applicant.meets_working_requirements &&
-            applicant.lives_in_ct
+            applicant.lives_in_ct &&
+            applicant.meets_provider_requirements
     }
 }
 
-module.exports = {Screener}
