@@ -11,8 +11,9 @@
     meetsRequirements(applicant) {
         return applicant.meets_family_income_requirements &&
             applicant.meets_working_requirements &&
-            applicant.lives_in_ct &&
-            applicant.meets_provider_requirements
+            applicant.meets_residency_requirements &&
+            applicant.meets_provider_requirements &&
+            applicant.meets_child_age_requirements
     }
 }
 

@@ -2,16 +2,17 @@ import { Screener } from './screener';
 
 describe('screener', () => {
     describe('not eligible', () => {
-        it('if family lives in Connecticut', () => {
+        it('if family and child live in Connecticut', () => {
             const ui = {
                 notEligible: jest.fn()
             };
             const screener = new Screener(ui);
             screener.review({
-                 lives_in_ct: false,
+                 meets_residency_requirements: false,
                  meets_working_requirements: true,
                  meets_family_income_requirements: true,
                  meets_provider_requirements: true,
+                 meets_child_age_requirements: true,
  
              })
             expect(ui.notEligible).toBeCalled();
@@ -26,7 +27,9 @@ describe('screener', () => {
                 meets_working_requirements: false,
                 meets_family_income_requirements: true,
                 meets_provider_requirements: true,
-                lives_in_ct: true,
+                meets_residency_requirements: true,
+                meets_child_age_requirements: true,
+
             })
             expect(ui.notEligible).toBeCalled();
         });
@@ -40,7 +43,9 @@ describe('screener', () => {
                 meets_family_income_requirements: false,
                 meets_working_requirements: true,
                 meets_provider_requirements: true,
-                lives_in_ct: true,
+                meets_residency_requirements: true,
+                meets_child_age_requirements: true,
+
             })
             expect(ui.notEligible).toBeCalled();
         });
@@ -54,7 +59,25 @@ describe('screener', () => {
                 meets_provider_requirements: false,
                 meets_family_income_requirements: true,
                 meets_working_requirements: true,
-                lives_in_ct: true,
+                meets_residency_requirements: true,
+                meets_child_age_requirements: true,
+
+            })
+            expect(ui.notEligible).toBeCalled();
+        });
+
+        it('does not meet child age requirements', () => {
+            const ui = {
+                notEligible: jest.fn()
+            };
+            const screener = new Screener(ui);
+            screener.review({
+                meets_child_age_requirements: false,
+                meets_provider_requirements: true,
+                meets_family_income_requirements: true,
+                meets_working_requirements: true,
+                meets_residency_requirements: true,
+
             })
             expect(ui.notEligible).toBeCalled();
         });
@@ -69,8 +92,9 @@ describe('screener', () => {
             screener.review({
                 meets_family_income_requirements: true,
                 meets_working_requirements: true,
-                lives_in_ct: true,
+                meets_residency_requirements: true,
                 meets_provider_requirements: true,
+                meets_child_age_requirements: true,
             })
             expect(ui.eligible).toBeCalled();
         })
